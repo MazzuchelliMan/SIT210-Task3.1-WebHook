@@ -1,0 +1,24 @@
+// Enables device to run before a connection is established
+SYSTEM_THREAD(ENABLED);
+
+// Variable declaration
+int onBoardLed = D7;
+int extLed = A5;
+int photoResistor = A0;
+int lightValue;
+
+void setup() {
+  pinMode(onBoardLed, OUTPUT);
+  pinMode(extLed, OUTPUT);
+  pinMode(photoResistor, INPUT);
+}
+
+void loop() {
+    lightValue = analogRead(photoResistor);
+		
+    // Publish variable to webhook
+    Particle.publish("lightValue", String::format("%d", lightValue), PRIVATE);
+    
+    // Delay thirty seconds
+    delay(30000);
+}
